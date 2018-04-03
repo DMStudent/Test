@@ -2,10 +2,12 @@
 
 import math
 import pickle
+import re
 
 accepted_chars = 'abcdefghijklmnopqrstuvwxyz '
 
 pos = dict([(char, idx) for idx, char in enumerate(accepted_chars)])
+pattern = re.compile(r" +")
 
 def normalize(line):
     """ Return only the subset of chars from accepted_chars.
@@ -17,14 +19,14 @@ def normalize(line):
             newLine = newLine + c.lower()
         else:
             newLine = newLine + " "
+    newLine = pattern.sub(" ", newLine)
     return newLine
     # return [c.lower() for c in line if c.lower() in accepted_chars]
 
 def ngram(n, l):
     """ Return all n grams from l after normalizing """
-    filtered = normalize(l)
-    for start in range(0, len(filtered) - n + 1):
-        yield ''.join(filtered[start:start + n])
+    for start in range(0, len(l) - n + 1):
+        yield ''.join(l[start:start + n])
 
 def train():
     """ Write a simple model as a pickle file """
@@ -94,6 +96,11 @@ def avg_transition_prob(l, log_prob_mat):
     """ Return the average transition prob from l through log_prob_mat. """
     log_prob = 0.0
     transition_ct = 0
+    if(l.isdigit()):
+        return 0.018
+    l = normalize(l)
+    if(len(l)<4):
+        return 0.02
     for a, b in ngram(2, l):
         log_prob += log_prob_mat[pos[a]][pos[b]]
         transition_ct += 1

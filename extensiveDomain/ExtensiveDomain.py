@@ -12,7 +12,7 @@ import sys
 import math
 import pickle
 import urllib
-
+import re
 logging.basicConfig(format='%(message)s', level=logging.INFO)
 
 
@@ -55,11 +55,19 @@ def removeOov(line):
         if pos_sex.has_key(i):
            newLine = newLine+i
     return newLine
+def remove_punctuation(line):
+    rule = re.compile(ur"[^\u4e00-\u9fa5]")
+    line = rule.sub('',line)
+    return line
+
 def avg_transition_prob(l):
     """ Return the average transition prob from l through log_prob_mat. """
     log_prob = 0.0
     transition_ct = 0
     l = removeOov(l)
+    l = remove_punctuation(l)
+    if (len(l) < 3):
+        return 0.0001
     for a, b in ngram(2, l):
         log_prob += counts_sex[pos_sex[a]][pos_sex[b]]
         transition_ct += 1
@@ -114,17 +122,14 @@ def getHost(url):
     return host
 def isHostGib(host):
     isGib = "0"
-    if host.startswith("www"):
-        isGib = "0"
-    else:
-        extList = host.split(".")
-        if len(extList) > 0:
-            if(is_number(extList[0])):
-                isGib = "1"
-            elif (len(extList[0])<4):
-                isGib = "0"
-            else:
-                isGib = str(avg_gib_prob(extList[0]))
+    extList = host.split(".")
+    if len(extList) > 0:
+        if(is_number(extList[0])):
+            isGib = thresh_gib/2
+        elif (len(extList[0])<4):
+            isGib = thresh_gib/2
+        else:
+            isGib = str(avg_gib_prob(extList[0]))
     return isGib
 # counts
 def mapFun(line):
@@ -140,7 +145,7 @@ def mapFun(line):
 
     isGib = isHostGib(url)
     title = lineList[1]
-    return url+"\t"+title+"\t"+isGib+"\t"+str(avg_transition_prob(title))
+    return url+"\t"+title+"\t"+str(avg_transition_prob(title))+"\t"+isGib
 
 
 

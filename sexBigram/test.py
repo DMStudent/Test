@@ -3,6 +3,7 @@
 
 import math
 import pickle
+import re
 
 pkl_file = open('model.pki', 'rb')
 model = pickle.load(pkl_file)
@@ -24,11 +25,18 @@ def removeOov(line):
         if pos.has_key(i):
            newLine = newLine+i
     return newLine
+def remove_punctuation(line):
+    rule = re.compile(ur"[^\u4e00-\u9fa5]")
+    line = rule.sub('',line)
+    return line
 def avg_transition_prob(l, log_prob_mat):
     """ Return the average transition prob from l through log_prob_mat. """
     log_prob = 0.0
     transition_ct = 0
     l = removeOov(l)
+    l = remove_punctuation(l)
+    if(len(l)<8):
+        return 0.0001
     for a, b in ngram(2, l):
         # if not pos.has_key(a):
         #     a = " "
@@ -66,8 +74,17 @@ def test():
     print avg_transition_prob(u"楼市楼盘　－　新房网　－　０７３１房产网　－　长沙购房必选", counts)
     print avg_transition_prob(u"长沙市投标监管网", counts)
     print avg_transition_prob(u"０７３１家装网　－　０７３１房产网", counts)
-    print avg_transition_prob(u"ＩＩＳ７", counts)
-    print avg_transition_prob(u"Ｐｉｗｉｋ　　登录", counts)
+    print avg_transition_prob(u"票信通　发票４００６", counts)
+    print avg_transition_prob(u"Ｅｘｃｅｐｔｉｏｎ", counts)
+    print avg_transition_prob(u"刘强在办公室干小念", counts)
+    print avg_transition_prob(u"１０２４基地手机直接看片，手机看片１０２４版免费，１０２４ｘｐ核工厂，ｘｐ３０３", counts)
+    print avg_transition_prob(u"乱情家庭王丽霞章局长，乱情家庭王丽霞第３部，乱情家庭王丽霞尚莉华，王丽霞第三部第７章", counts)
+    print avg_transition_prob(u"乡村爱情刘能操刘英", counts)
+    print avg_transition_prob(u"管守祖的空间", counts)
+    print avg_transition_prob(u"小学生作文大全｜小学生作文４００字", counts)
+    print avg_transition_prob(u"帮助中心　－　小学生作文大全网（ｗｗｗ．ｚｉｘｕｅｋａｏｓｈｉ．ｎｅｔ）", counts)
+    print avg_transition_prob(u"云霞小说网－更新快，无弹窗，绿色小说在线阅读", counts)
+
 
 
     print "--------------------------------------------------"
@@ -75,7 +92,7 @@ def test():
     print avg_transition_prob(u"食品安全和流感知识图片", counts)
     print avg_transition_prob(u"黄灯亮时3秒内过停止线", counts)
 
-    fr = file("train.txt.bkp")
+    fr = file("train.txt")
     fw = file("train2.txt", "w")
     for line in fr.readlines():
         score = avg_transition_prob(line.decode("utf-8"), counts)
@@ -84,7 +101,7 @@ def test():
     fr.close()
     fw.close()
 
-    fr = file("good.txt.bkp")
+    fr = file("good.txt")
     fw = file("good2.txt", "w")
     for line in fr.readlines():
         score = avg_transition_prob(line.decode("utf-8"), counts)
@@ -93,7 +110,7 @@ def test():
     fr.close()
     fw.close()
 
-    # fr = file("train.txt.bkp")
+    # fr = file("train.txt")
     # fw = file("train2.txt", "w")
     # for line in fr.readlines():
     #     score = avg_transition_prob(line.decode("utf-8"), counts)
@@ -102,7 +119,7 @@ def test():
     # fr.close()
     # fw.close()
     #
-    # fr = file("good.txt.bkp")
+    # fr = file("good.txt")
     # fw = file("good2.txt", "w")
     # for line in fr.readlines():
     #     score = avg_transition_prob(line.decode("utf-8"), counts)

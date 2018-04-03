@@ -31,15 +31,17 @@ r = (re.sub(u"[？>！\`\~\!\@\#\$\?\^\&\*\%\(\)\=\|\{\}\'\:\;\,\[\]\.\<\>\/\~\\
 
 print r
 
-import numpy as np
-import random
-a=np.array([[1,2,3],[4,5,6]])
-b=np.array([[11,21,31],[7,8,9]])
-c = np.concatenate((a,b),axis=0)
-print c
-idx = range(4)
-random.shuffle(idx)
-print idx
-print c[idx]
+url = 'www.6080.tv'
+ipUrlPattern = r"^http://(\d+\.\d+\.\d+\.\d+)(:\d+)?$"
+m = re.match(ipUrlPattern, url)
+def remove_punctuation(line):
+    rule = re.compile(ur"[^a-zA-Z0-9\u4e00-\u9fa5]")
+    line = rule.sub('',line)
+    return line
+line = u"１００８６．ｃｏｍ　｜　１００分的中国　１００分品质服务"
+print remove_punctuation(line)
+
+
+
 
 

@@ -11,4 +11,4 @@ model_mat = model_data['mat']
 threshold = model_data['thresh']
 
 print threshold
-print gib_detect_train.avg_transition_prob("thresh", model_mat)
+print gib_detect_train.avg_transition_prob("000000000027", model_mat)

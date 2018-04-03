@@ -103,15 +103,15 @@ def train():
     print avg_transition_prob(u"女主在小孩时被男主侵犯轩辕大宝全文阅读重生还珠格格尔泰风流我与爸爸在厨房嗯嗯", counts)
     print avg_transition_prob(u"囚妃传番外相公的惩罚深春弄潮瑶池被同学征服的母亲凤玲公车系列辣文安琪儿", counts)
     print avg_transition_prob(u"公公操儿媳口述男女缠欢绵爱视频小萝莉被绑架侮辱图片漫画张大春征服王雪", counts)
-    print avg_transition_prob(u"爸爸轻点胀死我了超级对对碰９７视频贞芸劫全文阅读目录鬼父２在线观看１至６集", counts)
+    print avg_transition_prob(u"爸爸轻点胀死我了超级对对碰视频贞芸劫全文阅读目录鬼父在线观看至集", counts)
     print avg_transition_prob(u"皇上不要了奴婢好疼爸爸不要塞了太涨了特级蔩片视频频日本变类态综艺", counts)
     print avg_transition_prob(u"失控的生理课全文阅读江疏影奶咪子全曝光美丽的新娘阿龟原文", counts)
-    print avg_transition_prob(u"白娜白波青春放纵全文娜美罗宾女帝３人齐上阵嗯爸爸不要快点花核狼车诗晴喂奶书包", counts)
+    print avg_transition_prob(u"白娜白波青春放纵全文娜美罗宾女帝人齐上阵嗯爸爸不要快点花核狼车诗晴喂奶书包", counts)
 
     print "--------------------------------------------------"
 
     print avg_transition_prob(u"食品安全和流感知识图片", counts)
-    print avg_transition_prob(u"黄灯亮时3秒内过停止线", counts)
+    print avg_transition_prob(u"黄灯亮时秒内过停止线", counts)
 
 
     #
