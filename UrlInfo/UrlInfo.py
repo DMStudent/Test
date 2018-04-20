@@ -93,6 +93,23 @@ class UrlInfo(object):
         self.domain_head = self.domain_head + 1
         self.host_head = self.host_head + 1
 
+    def getPrefix(self):
+        url = self.url
+        types = ["?", "/"]
+        pos = -1
+        type = -1;
+
+        for i in range(len(types)):
+            if (url[-1] == types[i]):
+                url = url[:-1]
+            _pos = url.rfind(types[i])
+            if (_pos > pos):
+                pos = _pos
+                type = i
+        if (pos >= 8 and type >= 0):
+            return url[:pos] + types[type]
+        else:
+            return None
     def in_top_domain_set(self, var1, var2, var3):
         """ generated source for method in_top_domain_set """
         var4 = ["ac", "co"]
@@ -234,6 +251,7 @@ class UrlInfo(object):
         print "Domain:" + urlInfoObj.getDomain()
         print "Home:" + urlInfoObj.getHome()
         print "Host:" + urlInfoObj.getHost()
+        print "Prefix:" + urlInfoObj.getPrefix()
 
 
 if __name__ == '__main__':
