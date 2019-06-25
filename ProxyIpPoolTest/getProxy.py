@@ -153,6 +153,7 @@ class getProxy():
                 if len(line)<1:
                     continue
                 f.write(line + "\n")
+            f.flush()
         f.close()
 
 
@@ -162,3 +163,5 @@ if __name__ == "__main__":
     print "Start at %s" % now
     obj=getProxy()
     obj.loop(100)
+    now = datetime.datetime.now()
+    print "End at %s" % now
